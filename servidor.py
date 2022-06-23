@@ -1,54 +1,37 @@
+import socket
 import threading
-import socket  # faz a comunicação entre o servidor e o cliente
 
-clients = []
 
 HOST = 'localhost'
 PORT = 50000
 
 
-def main():
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # IPV4 E TCP
+server.bind((HOST, PORT))  # Servidor e porta que o socket tem que escutar
+server.listen()  # modo de escuta
+print('Aguardando conexao de um cliente...')
 
-    # AF_INET(IPV4), SOCK_STREAM(TCP)
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    # servidor e porta que o socket tem que escutar
-    server.bind((HOST, PORT))
-    server.listen()     # modo de escuta
-    print('Servidor Iniciado\nAguardando conexão dos clientes!')
-
+def novo_client(client, connection):
+    ip = connection[0]
+    port = connection[1]
+    print(f'Novo cliente conectado em IP:{ip}, e porta:{port}!')
     while True:
-        client, ender = server.accept()  # método para aceitar a conexão
-        # adiciona um cliente dentro da lista dos clientes
-        clients.append(client)
-        print('Novo cliente conectado:')
-
-        # cada cliente que chegar, adicionamos a lista e iniciamos uma thread
-        thread = threading.Thread(target=messagesTreatment, args=[client])
-        thread.start()
-
-
-def messagesTreatment(client):
-    while True:
-        try:
-            msg = client.recv(2048)
-            broadcast(msg, client)
-        except:  # pylint: disable=bare-except
-            deleteClient(client)
+        msg = client.recv(1024)  # recebe a mensagem enviada pelo cliente
+        if msg.decode() == 'sair':
             break
+        print(f'O cliente da porta {port}, disse: {msg.decode()}')
+        reply = (f'Voce me disse: {msg.decode()}')
+        client.sendall(reply.encode('utf-8'))
+    print(f'O cliente do IP:{ip}, e porta:{port}!, foi desconectado!')
+    client.close()
 
 
-def broadcast(msg, client):
-    for clientItem in clients:
-        if clientItem != client:  # se for diferente manda a mensagem
-            try:
-                clientItem.send(msg)
-            except:  # pylint: disable=bare-except
-                deleteClient(clientItem)
-
-
-def deleteClient(client):
-    clients.remove(client)
-
-
-main()
+while True:
+    try:
+        client, ip = server.accept()  # server.accept (método para aceitar a conexão)
+        thread1 = threading.Thread(target=novo_client, args=[client, ip])
+        thread1.start()
+    except KeyboardInterrupt:
+        print(f'Desligando o servidor!')
+        server.close()
