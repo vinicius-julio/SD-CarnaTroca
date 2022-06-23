@@ -21,7 +21,7 @@ def novo_client(client, connection):
         if msg.decode() == 'sair':
             break
         print(f'O cliente da porta {port}, disse: {msg.decode()}')
-        reply = (f'Voce me disse: {msg.decode()}')
+        reply = (f'Aprovado!')
         client.sendall(reply.encode('utf-8'))
     print(f'O cliente do IP:{ip}, e porta:{port}!, foi desconectado!')
     client.close()
