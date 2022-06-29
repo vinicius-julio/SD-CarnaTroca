@@ -53,7 +53,7 @@ def lista_fantasias(client, cursor, nome):
 
     if(len(lista_tabela) == 0):
         reply = ('erro')
-        client.sendall(reply.econde('utf-8'))
+        client.sendall(reply.encode('utf-8'))
     else:
         reply = (str(lista_tabela))
         client.sendall(reply.encode('utf-8'))
@@ -67,7 +67,7 @@ def lista_meus_anuncios(client, cursor, nome):
 
     if(len(lista_tabela) == 0):
         reply = ('erro')
-        client.sendall(reply.econde('utf-8'))
+        client.sendall(reply.encode('utf-8'))
     else:
         reply = (str(lista_tabela))
         client.sendall(reply.encode('utf-8'))
