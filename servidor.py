@@ -1,3 +1,4 @@
+from pydoc import cli
 import socket
 import threading
 import sqlite3
@@ -26,6 +27,7 @@ def novo_client(client, connection):
         while True:
             msg = client.recv(1024)  # recebe a mensagem enviada pelo cliente
             aux = msg.decode('utf-8').split('"')  # recebe a mensagem e separa em strings onde tem "
+            print(aux)
             control = aux[3]  # pega o valor de controle
             
             cursor = db.cursor()  # possibilita fazer as operações com o banco
@@ -47,10 +49,20 @@ def novo_client(client, connection):
                 operacoes_server.lista_fantasias(client, cursor, nome)
             elif(control == '5'):
                 operacoes_server.lista_meus_anuncios(client, cursor, nome)
-
-            elif(control == 'quit'):
-                reply = ('disconnect')
-                client.sendall(reply.encode('utf-8'))
+            elif(control == '6'):
+                ID_fantasia_anunciante = aux[7]
+                ID_fantasia_proponente = aux[11]
+                operacoes_server.propor_troca(client, db, cursor, nome, ID_fantasia_anunciante, ID_fantasia_proponente)
+            elif(control == '7'):
+                operacoes_server.monitorar_trocas(client, cursor, nome)
+                
+            elif (control == 'aceita_troca'):
+                ID_troca = aux[7]
+                operacoes_server.aceita_trocas(client, cursor, db, nome, ID_troca)
+                
+            elif (control == 'recusa_troca'):
+                ID_troca = aux[7]
+                operacoes_server.recusa_trocas(client, cursor, db, nome, ID_troca)
 
                 
 

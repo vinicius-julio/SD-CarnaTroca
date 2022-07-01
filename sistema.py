@@ -70,6 +70,7 @@ def switch_tela_sistema(entrada ,client):
                 print('Nome da fantasia:',str(lista_tabela[i][2]))
                 print('Descrição:',str(lista_tabela[i][3]))
                 print('Tamanho:',str(lista_tabela[i][4]))
+                print('Disponivel:', str(lista_tabela[i][5]))  # se for 1 está disponível
 
             troca.tela_troca()
             entrada = input('Escolha uma das opcoes acima para continuar:')
@@ -105,22 +106,16 @@ def switch_tela_sistema(entrada ,client):
                 print('Nome da fantasia:',str(lista_tabela[i][2]))
                 print('Descrição:',str(lista_tabela[i][3]))
                 print('Tamanho:',str(lista_tabela[i][4]))
+                print('Disponivel:', str(lista_tabela[i][5]))  # se for 1 está disponível
 
-            tela_sistema()
+            troca.tela_troca()
             entrada = input('Escolha uma das opcoes acima para continuar:')
-            switch_tela_sistema(entrada,  client)
+            troca.switch_tela_troca(entrada,  client)
 
 
     elif entrada == '4':
-        user = {
-            'control' : 'quit'
-        }
-        envio = json.dumps(user)
-        client.sendall(envio.encode('utf-8'))
-        data = client.recv(1024)
-        if(data.decode() == 'disconnect'):
-            print('\033[1;31mVocê foi desconectado do sistema. :/\033[m')
-            return
+        print('\033[1;31m\nVocê foi desconectado!\033[m')
+        client.close()
 
     else:
         print('\033[1;31m\nOpcao inválida.\nEscolha uma opção válida!')

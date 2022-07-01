@@ -68,15 +68,9 @@ def switch_tela_inicio(num, client):
             switch_tela_inicio(num, client)
 
     elif num == '3':
-        user = {
-            'control' : 'quit'
-        }
-        envio = json.dumps(user)
-        client.sendall(envio.encode('utf-8'))
-        data = client.recv(1024)
-        if(data.decode() == 'disconnect'):
-            print('\033[1;31mVocê foi desconectado do sistema. :/\033[m')
-            return
+        print('\033[1;31m\nVocê foi desconectado!\033[m')
+        client.close()
+
     else:
         print('\033[1;31m\nOpcao inválida.\nEscolha uma opção válida!\033[m')
         tela_inicio()
