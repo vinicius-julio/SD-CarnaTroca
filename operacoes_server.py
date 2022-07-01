@@ -40,7 +40,7 @@ def cria_anuncio(client, cursor, db, nome, nome_fantasia, descricao, tamanho):
         client.sendall(reply.encode('utf-8'))
     else:
         reply = (f'Aprovado!')
-        cursor.execute(f"INSERT INTO fantasias(user_userName, nome_fantasia, descricao, tamanho) VALUES ('{nome}','{nome_fantasia}','{descricao}', '{tamanho}')")
+        cursor.execute(f"INSERT INTO fantasias(user_userName, nome_fantasia, descricao, tamanho, disponivel) VALUES ('{nome}','{nome_fantasia}','{descricao}', '{tamanho}', '1')")
         db.commit()
         client.sendall(reply.encode('utf-8'))
 
