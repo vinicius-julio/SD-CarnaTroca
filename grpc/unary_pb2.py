@@ -14,12 +14,16 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bunary.proto\x12\x05unary\"\x1a\n\x07Message\x12\x0f\n\x07message\x18\x01 \x01(\t\"4\n\x0fMessageResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\x12\x10\n\x08received\x18\x02 \x01(\x08\x32\x46\n\x05Unary\x12=\n\x11GetServerResponse\x12\x0e.unary.Message\x1a\x16.unary.MessageResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0bunary.proto\x12\x05unary\"\x1a\n\x07Message\x12\x0f\n\x07message\x18\x01 \x01(\t\"4\n\x0fMessageResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\x12\x10\n\x08received\x18\x02 \x01(\x08\"-\n\x0e\x63\x61\x64UserRequest\x12\x0c\n\x04nome\x18\x01 \x01(\t\x12\r\n\x05senha\x18\x02 \x01(\t\"D\n\x0f\x63\x61\x64UserResponse\x12\x10\n\x08response\x18\x01 \x01(\x08\x12\x11\n\tidUsuario\x18\x02 \x01(\x05\x12\x0c\n\x04nome\x18\x03 \x01(\t\"/\n\x10loginUserRequest\x12\x0c\n\x04nome\x18\x01 \x01(\t\x12\r\n\x05senha\x18\x02 \x01(\t\"F\n\x11loginUserResponse\x12\x10\n\x08response\x18\x01 \x01(\x08\x12\x11\n\tidUsuario\x18\x02 \x01(\x05\x12\x0c\n\x04nome\x18\x03 \x01(\t2\xc9\x01\n\x05Unary\x12=\n\x11GetServerResponse\x12\x0e.unary.Message\x1a\x16.unary.MessageResponse\"\x00\x12?\n\x0c\x43\x61\x64\x61straUser\x12\x15.unary.cadUserRequest\x1a\x16.unary.cadUserResponse\"\x00\x12@\n\tloginUser\x12\x17.unary.loginUserRequest\x1a\x18.unary.loginUserResponse\"\x00\x62\x06proto3')
 
 
 
 _MESSAGE = DESCRIPTOR.message_types_by_name['Message']
 _MESSAGERESPONSE = DESCRIPTOR.message_types_by_name['MessageResponse']
+_CADUSERREQUEST = DESCRIPTOR.message_types_by_name['cadUserRequest']
+_CADUSERRESPONSE = DESCRIPTOR.message_types_by_name['cadUserResponse']
+_LOGINUSERREQUEST = DESCRIPTOR.message_types_by_name['loginUserRequest']
+_LOGINUSERRESPONSE = DESCRIPTOR.message_types_by_name['loginUserResponse']
 Message = _reflection.GeneratedProtocolMessageType('Message', (_message.Message,), {
   'DESCRIPTOR' : _MESSAGE,
   '__module__' : 'unary_pb2'
@@ -34,6 +38,34 @@ MessageResponse = _reflection.GeneratedProtocolMessageType('MessageResponse', (_
   })
 _sym_db.RegisterMessage(MessageResponse)
 
+cadUserRequest = _reflection.GeneratedProtocolMessageType('cadUserRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CADUSERREQUEST,
+  '__module__' : 'unary_pb2'
+  # @@protoc_insertion_point(class_scope:unary.cadUserRequest)
+  })
+_sym_db.RegisterMessage(cadUserRequest)
+
+cadUserResponse = _reflection.GeneratedProtocolMessageType('cadUserResponse', (_message.Message,), {
+  'DESCRIPTOR' : _CADUSERRESPONSE,
+  '__module__' : 'unary_pb2'
+  # @@protoc_insertion_point(class_scope:unary.cadUserResponse)
+  })
+_sym_db.RegisterMessage(cadUserResponse)
+
+loginUserRequest = _reflection.GeneratedProtocolMessageType('loginUserRequest', (_message.Message,), {
+  'DESCRIPTOR' : _LOGINUSERREQUEST,
+  '__module__' : 'unary_pb2'
+  # @@protoc_insertion_point(class_scope:unary.loginUserRequest)
+  })
+_sym_db.RegisterMessage(loginUserRequest)
+
+loginUserResponse = _reflection.GeneratedProtocolMessageType('loginUserResponse', (_message.Message,), {
+  'DESCRIPTOR' : _LOGINUSERRESPONSE,
+  '__module__' : 'unary_pb2'
+  # @@protoc_insertion_point(class_scope:unary.loginUserResponse)
+  })
+_sym_db.RegisterMessage(loginUserResponse)
+
 _UNARY = DESCRIPTOR.services_by_name['Unary']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
@@ -42,6 +74,14 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _MESSAGE._serialized_end=48
   _MESSAGERESPONSE._serialized_start=50
   _MESSAGERESPONSE._serialized_end=102
-  _UNARY._serialized_start=104
-  _UNARY._serialized_end=174
+  _CADUSERREQUEST._serialized_start=104
+  _CADUSERREQUEST._serialized_end=149
+  _CADUSERRESPONSE._serialized_start=151
+  _CADUSERRESPONSE._serialized_end=219
+  _LOGINUSERREQUEST._serialized_start=221
+  _LOGINUSERREQUEST._serialized_end=268
+  _LOGINUSERRESPONSE._serialized_start=270
+  _LOGINUSERRESPONSE._serialized_end=340
+  _UNARY._serialized_start=343
+  _UNARY._serialized_end=544
 # @@protoc_insertion_point(module_scope)

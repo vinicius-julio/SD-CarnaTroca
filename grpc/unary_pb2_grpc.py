@@ -19,6 +19,16 @@ class UnaryStub(object):
                 request_serializer=unary__pb2.Message.SerializeToString,
                 response_deserializer=unary__pb2.MessageResponse.FromString,
                 )
+        self.CadastraUser = channel.unary_unary(
+                '/unary.Unary/CadastraUser',
+                request_serializer=unary__pb2.cadUserRequest.SerializeToString,
+                response_deserializer=unary__pb2.cadUserResponse.FromString,
+                )
+        self.loginUser = channel.unary_unary(
+                '/unary.Unary/loginUser',
+                request_serializer=unary__pb2.loginUserRequest.SerializeToString,
+                response_deserializer=unary__pb2.loginUserResponse.FromString,
+                )
 
 
 class UnaryServicer(object):
@@ -33,6 +43,18 @@ class UnaryServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CadastraUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def loginUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_UnaryServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -40,6 +62,16 @@ def add_UnaryServicer_to_server(servicer, server):
                     servicer.GetServerResponse,
                     request_deserializer=unary__pb2.Message.FromString,
                     response_serializer=unary__pb2.MessageResponse.SerializeToString,
+            ),
+            'CadastraUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.CadastraUser,
+                    request_deserializer=unary__pb2.cadUserRequest.FromString,
+                    response_serializer=unary__pb2.cadUserResponse.SerializeToString,
+            ),
+            'loginUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.loginUser,
+                    request_deserializer=unary__pb2.loginUserRequest.FromString,
+                    response_serializer=unary__pb2.loginUserResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -65,5 +97,39 @@ class Unary(object):
         return grpc.experimental.unary_unary(request, target, '/unary.Unary/GetServerResponse',
             unary__pb2.Message.SerializeToString,
             unary__pb2.MessageResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CadastraUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/unary.Unary/CadastraUser',
+            unary__pb2.cadUserRequest.SerializeToString,
+            unary__pb2.cadUserResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def loginUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/unary.Unary/loginUser',
+            unary__pb2.loginUserRequest.SerializeToString,
+            unary__pb2.loginUserResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

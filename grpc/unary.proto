@@ -31,7 +31,7 @@ message cadUserRequest{
 }
 message cadUserResponse{
   bool response = 1; //achou ou nao o usuario e senha no db
-  int32 idUsuario = 2
+  int32 idUsuario = 2;
   string nome = 3; //retorna nome usuario
 }
 
@@ -41,7 +41,7 @@ message loginUserRequest{
 }
 message loginUserResponse{
   bool response = 1; //achou ou nao o usuario e senha no db
-  int32 idUsuario = 2
+  int32 idUsuario = 2;
   string nome = 3; //retorna nome usuario
 
 
