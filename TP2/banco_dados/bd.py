@@ -21,7 +21,7 @@ def loginUser_db(nome, senha):
     cursor.execute(f"SELECT * FROM user WHERE user_name = '{nome}' and senha = '{senha}'")
     verifica = str(cursor.fetchall())  # verifica recebe o conteúdo do select
     print(verifica)
-    if (verifica) == '[]':  # se for != de vazio, signifca que tem dado na tabela
+    if (verifica) == '[]': 
         return 'erro'
     else:
         return 'aprovado' 

@@ -1,8 +1,5 @@
-import sqlite3
-import json
 import grpc
 from concurrent import futures
-import time
 import carnatroca_pb2_grpc as pb2_grpc
 import carnatroca_pb2 as pb2
 import operacoes_server

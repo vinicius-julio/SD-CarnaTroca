@@ -1,8 +1,6 @@
 import os
-import grpc
-import carnatroca_pb2_grpc as pb2_grpc
-import carnatroca_pb2 as pb2
 import telas.tela_sistema as tela_sistema
+import operacoes_cliente as cliente
 
 def tela_inicio():
     print('\033[1;36m-----------------------------------------------------------')
@@ -18,10 +16,9 @@ def switch_tela_inicio(num, stub):
 
         nome = input('Escolha seu nome de usuario:')
         senha = input('Escolha uma senha para sua conta:')
-        user = stub.cadastraUser(pb2.cadUserRequest(nome = nome, senha = senha))
-        user = tela_sistema.trata_mensagem(user)
-        
-        if (user == 'aprovado'):         # decodifica o dado para conseguir ler
+        user = cliente.Cliente.cadastraUser(stub, nome, senha)
+
+        if (user == 'aprovado'):      
             os.system('clear')
             print('\033[1;32mCadastro realizado com sucesso!!\033[m')
             tela_sistema.tela_sistema()  
@@ -37,15 +34,11 @@ def switch_tela_inicio(num, stub):
     elif num == '2':
         print('\033[1;36mBora fazer login\033[m')
         print('\033[1;36m-----------------------------------------------------------\033[m')
-    
         nome = input('\nEntre com seu nome de usuario:')
         senha = input('Senha:')
-        user = stub.loginUser(pb2.cadUserRequest(nome = nome, senha = senha))
-
-        user = tela_sistema.trata_mensagem(user)
-        print(user)
+        user = cliente.Cliente.loginUser(stub, nome, senha)
         
-        if (user == 'aprovado'):         # decodifica o dado para conseguir ler
+        if (user == 'aprovado'):       
             os.system('clear')
             tela_sistema.tela_sistema()  
             entrada = input('Escolha uma das opcoes acima para continuar:')

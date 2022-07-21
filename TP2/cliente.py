@@ -1,9 +1,4 @@
-import sqlite3
-import os
-import json
-import sys
 import telas.tela_inicial as tela_inicial
-
 import grpc
 import carnatroca_pb2_grpc as pb2_grpc
 import carnatroca_pb2 as pb2
@@ -19,11 +14,7 @@ def run ():
         num = input('Escolha uma das opcoes acima para continuar:')
         tela_inicial.switch_tela_inicio(num, stub)
 
-
-#def close(channel):
- #   channel.close()
-
-    
+  
 if __name__ == '__main__':
     run()
 

@@ -1,8 +1,6 @@
 import telas.tela_sistema as tela_sistema
 import os
-import json
-import carnatroca_pb2_grpc as pb2_grpc
-import carnatroca_pb2 as pb2
+import operacoes_cliente as cliente
 
 def tela_troca():
     print('\033[1;36m-----------------------------------------------------------')
@@ -24,20 +22,18 @@ def switch_tela_troca(entrada , stub, nome):
 
         ID_item_anunciante =  input('\nID da fantasia que você deseja:')
         ID_item_proponente = input('ID da fantasia que você deseja propor em troca:')
-        ID_item_anunciante = int(ID_item_anunciante)
-        ID_item_proponente = int(ID_item_proponente)
-        troca = stub.proporTroca(pb2.trocaRequest(ID_item_anunciante=ID_item_anunciante,ID_item_proponente=ID_item_proponente, nome=nome))
-        troca = tela_sistema.trata_mensagem(troca)
+        
+        troca = cliente.Cliente.proporTroca(stub, ID_item_anunciante, ID_item_proponente, nome)
 
-        if (troca == 'erro'):         # decodifica o dado para conseguir ler
-            #os.system('clear')
+        if (troca == 'erro'):      
+            os.system('clear')
             print('\033[1;31mOcorreu um erro ao solicitar a troca de fantasias!!\033[m')
             print('\033[1;31mUma das fantasias já está em operação de troca!!\033[m')
             tela_troca()
             entrada = input('Escolha uma das opcoes acima para continuar:')
             switch_tela_troca(entrada , stub, nome)
         else:
-           # os.system('clear')
+            os.system('clear')
             print('\033[1;36mSeu pedido de troca foi enviado ao anunciante!!\033[m')
             print('\033[1;36mAguarde até que ele responda!!\033[m')
 
@@ -47,9 +43,8 @@ def switch_tela_troca(entrada , stub, nome):
 
 
     elif entrada == '2':
-        print('\033[1;36mListando suas propostas de troca!\033[m')
-        troca = stub.listaTroca(pb2.listaTrocaRequest(nome=nome))
-        troca = str(troca)
+
+        troca = cliente.Cliente.listaTroca(stub, nome)
 
         if (len(troca) == 0):         
             os.system('clear')
@@ -61,7 +56,7 @@ def switch_tela_troca(entrada , stub, nome):
         else:
             os.system('clear')
             print('\033[1;36mListando suas propostas de troca:\033[m')
-            troca = tela_sistema.trata_lista(troca)
+            troca = cliente.Cliente.trata_lista(troca)
             monitora_troca = eval(troca)  # esse eval faz o dado voltar a ser lista
             linhas = len(monitora_troca) # pego a quantidade de linhas da lista
             
@@ -82,16 +77,14 @@ def switch_tela_troca(entrada , stub, nome):
                     print('Tamanho:',str(monitora_troca[i+1][4]))
                     print('ID_Troca:',str(monitora_troca[i+1][5]))
                     print('\033[1;36m-----------------------------------------------------------\033[m')
+                tela_troca2()
+                troca = input('Escolha uma das opcoes acima para continuar:')
+                switch_tela_troca2(troca , stub, nome)
             else:
                 print('\033[1;31m\nNão há propostas para você!\033[m')
                 tela_troca()
                 entrada = input('Escolha uma das opcoes acima para continuar:')
                 switch_tela_troca(entrada , stub, nome)
-
-       
-        tela_troca2()
-        troca = input('Escolha uma das opcoes acima para continuar:')
-        switch_tela_troca2(troca , stub, nome)
 
 
     elif(entrada == '3'):
@@ -103,8 +96,6 @@ def switch_tela_troca(entrada , stub, nome):
 
     elif(entrada == '4'):
         print('\033[1;31m\nVocê foi desconectado!\033[m')
-        #channel.close()
-
 
     else:
         print('\033[1;31m\nOpcao inválida.\nEscolha uma opção válida!')
@@ -116,15 +107,13 @@ def switch_tela_troca(entrada , stub, nome):
 
 
 def switch_tela_troca2(troca ,stub, nome):
-    print('O VALOR DE TROCA É:', troca)
     if(troca == '1'):
 
         ID_troca =  input('\nInforme o ID da troca que deseja aceitar:')
-        ID_troca = int(ID_troca)
-        finaliza_troca = stub.aceitaTroca(pb2.finalizaTrocaRequest(ID_troca=ID_troca,nome=nome))
-        finaliza_troca = tela_sistema.trata_mensagem(finaliza_troca)
+        
+        finaliza_troca = cliente.Cliente.aceitaTroca(stub, ID_troca, nome)
 
-        if (finaliza_troca == 'erro'):         # decodifica o dado para conseguir ler
+        if (finaliza_troca == 'erro'):        
             os.system('clear')
             print('\033[1;31mOcorreu pois você informou o ID da troca errado!!\033[m')
             print('\033[1;31mInforme um ID correto!!\033[m')
@@ -141,11 +130,10 @@ def switch_tela_troca2(troca ,stub, nome):
     elif(troca == '2'):  #RECUSA A TROCA
 
         ID_troca =  input('\nInforme o ID da troca que deseja recusar:')
-        ID_troca = int(ID_troca)
-        finaliza_troca = stub.recusaTroca(pb2.finalizaTrocaRequest(ID_troca=ID_troca,nome=nome))
-        finaliza_troca = tela_sistema.trata_mensagem(finaliza_troca)
+        
+        finaliza_troca = cliente.Cliente.recusaTroca(stub, ID_troca, nome)
 
-        if (finaliza_troca == 'erro'):         # decodifica o dado para conseguir ler
+        if (finaliza_troca == 'erro'): 
             os.system('clear')
             print('\033[1;31mOcorreu pois você informou o ID da troca errado!!\033[m')
             print('\033[1;31mInforme um ID correto!!\033[m')

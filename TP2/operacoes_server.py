@@ -1,5 +1,3 @@
-from email import message
-import sqlite3
 import carnatroca_pb2_grpc as pb2_grpc
 import carnatroca_pb2 as pb2
 import banco_dados.bd as bd
@@ -29,11 +27,9 @@ class UnaryService(pb2_grpc.UnaryServicer):
         descricao = request.descricao
         tamanho = request.tamanho
         nome = request.nome
-        print('ENTREI')
         sql = bd.criaAnuncio_db(nomeFantasia, descricao, tamanho, nome)
         return pb2.anuncioResponse(message = sql)
         
-
 
     def listaFantasia(self, request, context):
         nome = request.nome
