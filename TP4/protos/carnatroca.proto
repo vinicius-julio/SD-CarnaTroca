@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package unary;
+
+
+service Unary{
+  // A simple RPC.
+  //
+  // Obtains the MessageResponse at a given position.
+  //rpc GetServerResponse(Message) returns (MessageResponse);
+
+  rpc cadastraUser(cadUserRequest) returns (cadUserResponse){}
+  rpc loginUser(cadUserRequest) returns (cadUserResponse){}
+  rpc criaNovoAnuncio(anuncioRequest) returns (anuncioResponse){}
+  rpc listaFantasia(listaRequest) returns (listaResponse){}
+  rpc listaMeusAnuncios(listaRequest) returns (listaResponse){}
+  rpc proporTroca(trocaRequest) returns (trocaResponse){}
+  rpc listaTroca(listaTrocaRequest) returns (listaTrocaResponse){}
+  rpc aceitaTroca(finalizaTrocaRequest) returns (finalizaTrocaResponse){}
+  rpc recusaTroca(finalizaTrocaRequest) returns (finalizaTrocaResponse){}
+}
+
+message cadUserRequest{
+ string nome = 1;
+ string senha = 2;
+}
+
+message cadUserResponse{
+ string message = 1;
+}
+
+message anuncioRequest{
+  string nomeFantasia = 1;
+  string descricao = 2;
+  string tamanho = 3;
+  string nome = 4;
+}
+
+message anuncioResponse{
+  string message = 1;
+}
+
+
+message listaRequest{
+  string nome = 1;
+}
+
+message listaResponse{
+  string message = 1;
+}
+
+message trocaRequest{
+  int32 ID_item_anunciante = 1;
+  int32 ID_item_proponente = 2;
+  string nome = 3;
+}
+
+message trocaResponse{
+  string message = 1;
+}
+
+message listaTrocaRequest{
+  string nome = 1;
+}
+
+message listaTrocaResponse{
+  string message = 1;
+}
+
+message finalizaTrocaRequest{
+  int32 ID_troca = 1;
+  string nome = 2;
+}
+
+message finalizaTrocaResponse{
+  string message = 1;
+}
